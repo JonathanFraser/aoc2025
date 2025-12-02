@@ -1,7 +1,7 @@
 name:                aoc2025
 version:             0.1.0.0
 github:              "JonathanFraser/aoc2025"
-license:             BSD-3-Clause
+license:             MIT
 author:              "Jonathan Fraser"
 maintainer:          "jonathanfras@gmail.com"
 copyright:           "2025 Jonathan Fraser"
