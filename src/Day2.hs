@@ -1,7 +1,7 @@
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
-module Day2 (run_parts) where
+module Day2 (run_parts,part1,part2) where
 
 import Lib
 import qualified Data.Text as T 

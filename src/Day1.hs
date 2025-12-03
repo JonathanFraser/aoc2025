@@ -1,7 +1,7 @@
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
-module Day1 (run_parts) where
+module Day1 (run_parts,part1,part2) where
 
 import qualified Data.Text as T
 import Data.FileEmbed (embedFile)
