@@ -21,8 +21,8 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
-- text >= 0.1
-- file-embed >= 0.0.16.0
+- text
+- file-embed
 - bytestring 
 - template-haskell
 

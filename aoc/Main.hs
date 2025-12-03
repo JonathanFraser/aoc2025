@@ -1,9 +1,11 @@
 import qualified Day1 as D1
 import qualified Day2 as D2
-import Options.Applicative
-import Control.Applicative ((<|>))
+import qualified Day3 as D3
 
-data Day = Day1 | Day2 deriving (Show, Eq)
+import Options.Applicative
+import Control.Applicative()
+
+data Day = Day1 | Day2 | Day3 deriving (Show, Eq)
 
 day1Input :: Parser Day
 day1Input = flag' Day1
@@ -17,8 +19,14 @@ day2Input = flag' Day2
     <> short '2'
     <> help "Run Day2" )
 
+day3Input :: Parser Day
+day3Input = flag' Day3
+    (  long "day3"
+    <> short '3'
+    <> help "Run Day3" )
+
 allInput :: Parser Day
-allInput = day1Input <|> day2Input
+allInput = day1Input <|> day2Input <|> day3Input
 
 main :: IO ()
 main = do
@@ -29,3 +37,4 @@ main = do
     case day of
         Day1 -> D1.run_parts
         Day2 -> D2.run_parts
+        Day3 -> D3.run_parts
