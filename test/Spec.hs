@@ -2,6 +2,7 @@ import Test.Hspec
 import qualified Day1 as Day1
 import qualified Day2 as Day2
 import qualified Day3 as Day3
+import qualified Day4 as Day4
 
 main :: IO ()
 main = hspec $ do
@@ -22,3 +23,9 @@ main = hspec $ do
             Day3.part1 `shouldBe` (17142 :: Int)
         it "part2" $
             Day3.part2 `shouldBe` (169935154100102 :: Int)
+
+    describe "Day4" $ do
+        it "part1" $ do
+            Day4.part1 `shouldBe` (1449 :: Int)
+        it "part2" $
+            Day4.part2 `shouldBe` (8746 :: Int)

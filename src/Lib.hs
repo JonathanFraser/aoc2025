@@ -8,6 +8,9 @@ module Lib
     , chunksOf
     , getGreedyOrderedMax
     , convertDigitsToInt
+    , decodeCharacterGrid
+    , clearLocation
+    , clearLocations
     ) where
 
 import qualified Data.Text.Encoding as E
@@ -15,6 +18,11 @@ import qualified Data.ByteString as BS
 import qualified Data.Text as T
 import qualified Data.List as DL
 import Data.FileEmbed (embedFile)
+import Data.Map (Map)
+import qualified Data.Map as Map
+import Data.Set (Set)
+
+import qualified Data.Set as Set
 
 import Control.Exception (throw, Exception)
 
@@ -56,3 +64,17 @@ convertDigitsToInt digits = let
                                 powers = [0..] 
                                 zipped = zip reverseValues powers
                               in sum $ fmap (\(digit, power) -> digit * (fromIntegral 10)^power) zipped
+
+
+
+decodeCharacterGrid :: [T.Text] -> Map (Int,Int) Char
+decodeCharacterGrid lines =  Map.fromList $ do 
+                                    (y, line) <- zip [0..] lines
+                                    (x, char) <- zip [0..] (T.unpack line)
+                                    return ((x,y), char)
+
+clearLocation :: (Integral k) => Map (k,k) Char -> (k,k) -> Map (k,k) Char
+clearLocation papLocs loc = Map.insert loc '.' papLocs
+
+clearLocations :: (Integral k) => Map (k,k) Char -> Set (k,k) -> Map (k,k) Char
+clearLocations papLocs locs = Set.foldl' clearLocation papLocs locs

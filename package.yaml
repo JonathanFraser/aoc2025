@@ -25,6 +25,7 @@ dependencies:
 - file-embed
 - bytestring 
 - template-haskell
+- containers
 
 ghc-options:
 - -Wall
