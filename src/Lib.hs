@@ -11,6 +11,7 @@ module Lib
     , decodeCharacterGrid
     , clearLocation
     , clearLocations
+    , neighbors
     ) where
 
 import qualified Data.Text.Encoding as E
@@ -78,3 +79,8 @@ clearLocation papLocs loc = Map.insert loc '.' papLocs
 
 clearLocations :: (Integral k) => Map (k,k) Char -> Set (k,k) -> Map (k,k) Char
 clearLocations papLocs locs = Set.foldl' clearLocation papLocs locs
+
+neighbors :: (Integral a, Integral b) => (a,b) -> [(a,b)]
+neighbors (x,y) = [(x-1,y-1),(x,y-1),(x+1,y-1),
+                      (x-1,y),(x+1,y),
+                      (x-1,y+1),(x,y+1),(x+1,y+1)]

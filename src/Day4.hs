@@ -13,18 +13,13 @@ import qualified Lib as L
 fileMap :: Map (Int,Int) Char
 fileMap = L.decodeCharacterGrid $ T.lines $ L.decodeTextFile $(embedFile "data/2025_day4_p1.txt")
 
-neighbors :: (Integral a, Integral b) => (a,b) -> [(a,b)]
-neighbors (x,y) = [(x-1,y-1),(x,y-1),(x+1,y-1),
-                      (x-1,y),(x+1,y),
-                      (x-1,y+1),(x,y+1),(x+1,y+1)]
-
 
 papercoords :: Map (Int,Int) Char -> [(Int,Int)]
 papercoords m = map fst $ filter (\(_,c) -> c == '@') $ Map.toList m 
 
 isAccessible :: Map (Int,Int) Char -> (Int,Int) -> Bool
 isAccessible papLocs c = let 
-                    neighborValues = map (\g -> Map.findWithDefault '.' g papLocs) $ neighbors c
+                    neighborValues = map (\g -> Map.findWithDefault '.' g papLocs) $ L.neighbors c
                 in length (filter (== '@') neighborValues) < 4
 
 getAccessible :: Map (Int,Int) Char -> Set (Int,Int)
