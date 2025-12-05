@@ -11,20 +11,12 @@ import Text.Read (readMaybe)
 sourceFile :: [T.Text]
 sourceFile =  T.lines $ L.decodeTextFile $(embedFile "data/2025_day5_p1.txt")
 
-parseLine :: T.Text -> ([(Integer,Integer)],[Integer]) -> ([(Integer,Integer)],[Integer])
-parseLine text (prange,pvals) = if L.charInText '-' text then 
-                                let 
-                                    newRange = L.splitRange text 
-                                in (newRange:prange, pvals)
-                              else
-                                let 
-                                    val = readMaybe (T.unpack text) :: Maybe Integer
-                                in case val of
-                                    Nothing -> (prange,pvals)
-                                    Just v -> (prange, v:pvals)
 
 parseFile :: ([(Integer,Integer)],[Integer])
-parseFile = foldr parseLine ([],[]) sourceFile
+parseFile = let 
+                (ranges, rest) = L.parseRangeBlock sourceFile
+                (ints, _) = L.parseIntegerBlock rest
+            in (ranges, ints)
 
 inRange :: Integer -> (Integer,Integer) -> Bool
 inRange val (lower,upper) = val >= lower && val <= upper

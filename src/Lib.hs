@@ -13,6 +13,8 @@ module Lib
     , clearLocations
     , neighbors
     , charInText
+    , parseRangeBlock
+    , parseIntegerBlock
     ) where
 
 import qualified Data.Text.Encoding as E
@@ -89,3 +91,20 @@ neighbors (x,y) = [(x-1,y-1),(x,y-1),(x+1,y-1),
 
 charInText :: Char -> T.Text -> Bool
 charInText charToFind myText = isJust (T.find (== charToFind) myText)
+
+
+parseRangeBlock :: [T.Text] -> ([(Integer,Integer)],[T.Text])
+parseRangeBlock [] = ([],[])
+parseRangeBlock (x:xs) = if x == T.pack "" then ([], xs)
+                        else let 
+                                (ranges, rest) = parseRangeBlock xs
+                                newRange = splitRange x
+                             in (newRange:ranges, rest)
+
+parseIntegerBlock :: [T.Text] -> ([Integer],[T.Text])
+parseIntegerBlock [] = ([],[])
+parseIntegerBlock (x:xs) = if x == T.pack "" then ([], xs)
+                        else let 
+                                (ints, rest) = parseIntegerBlock xs
+                                newInt = read (T.unpack x) :: Integer
+                             in (newInt:ints, rest)
