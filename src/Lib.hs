@@ -12,6 +12,7 @@ module Lib
     , clearLocation
     , clearLocations
     , neighbors
+    , charInText
     ) where
 
 import qualified Data.Text.Encoding as E
@@ -22,6 +23,7 @@ import Data.FileEmbed (embedFile)
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Set (Set)
+import Data.Maybe (isJust)
 
 import qualified Data.Set as Set
 
@@ -37,11 +39,11 @@ decodeTextFile = E.decodeUtf8
 splitCommaSeperated :: T.Text -> [T.Text]
 splitCommaSeperated input = T.splitOn (T.pack ",") input
 
-splitRange :: T.Text -> (Int, Int)
+splitRange :: T.Text -> (Integer, Integer)
 splitRange input = let
                     lower:upper:[] = T.splitOn (T.pack "-") input
-                    readLower = read (T.unpack lower) :: Int
-                    readUpper = read (T.unpack upper) :: Int
+                    readLower = read (T.unpack lower) :: Integer
+                    readUpper = read (T.unpack upper) :: Integer
                   in (readLower, readUpper)
 
 chunksOf :: Int -> T.Text -> [T.Text]
@@ -84,3 +86,6 @@ neighbors :: (Integral a, Integral b) => (a,b) -> [(a,b)]
 neighbors (x,y) = [(x-1,y-1),(x,y-1),(x+1,y-1),
                       (x-1,y),(x+1,y),
                       (x-1,y+1),(x,y+1),(x+1,y+1)]
+
+charInText :: Char -> T.Text -> Bool
+charInText charToFind myText = isJust (T.find (== charToFind) myText)

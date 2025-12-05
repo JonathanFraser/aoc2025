@@ -2,11 +2,14 @@ import qualified Day1 as D1
 import qualified Day2 as D2
 import qualified Day3 as D3
 import qualified Day4 as D4
+import qualified Day5 as D5
+import qualified Day6 as D6
+
 
 import Options.Applicative
 import Control.Applicative()
 
-data Day = Day1 | Day2 | Day3 | Day4 deriving (Show, Eq)
+data Day = Day1 | Day2 | Day3 | Day4 | Day5 | Day6 deriving (Show, Eq)
 
 day1Input :: Parser Day
 day1Input = flag' Day1
@@ -32,8 +35,20 @@ day4Input = flag' Day4
     <> short '4'
     <> help "Run Day4" )
 
+day5Input :: Parser Day
+day5Input = flag' Day5
+    (  long "day5"
+    <> short '5'
+    <> help "Run Day5" )
+
+day6Input :: Parser Day
+day6Input = flag' Day6
+    (  long "day6"
+    <> short '6'
+    <> help "Run Day6" )
+
 allInput :: Parser Day
-allInput = day1Input <|> day2Input <|> day3Input <|> day4Input
+allInput = day1Input <|> day2Input <|> day3Input <|> day4Input <|> day5Input <|> day6Input
 
 main :: IO ()
 main = do
@@ -46,3 +61,5 @@ main = do
         Day2 -> D2.run_parts
         Day3 -> D3.run_parts
         Day4 -> D4.run_parts
+        Day5 -> D5.run_parts
+        Day6 -> D6.run_parts
