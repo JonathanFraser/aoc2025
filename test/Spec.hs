@@ -4,6 +4,7 @@ import qualified Day2 as Day2
 import qualified Day3 as Day3
 import qualified Day4 as Day4
 import qualified Day5 as Day5
+import qualified Day6 as Day6
 
 main :: IO ()
 main = hspec $ do
@@ -36,3 +37,9 @@ main = hspec $ do
             Day5.part1 `shouldBe` (563 :: Int)
         it "part2" $
             Day5.part2 `shouldBe` (338693411431456 :: Integer)
+
+    describe "Day6" $ do
+        it "part1" $ do
+            Day6.part1 `shouldBe` (5977759036837 :: Int)
+        it "part2" $
+            Day6.part2 `shouldBe` (9630000828442 :: Int)
