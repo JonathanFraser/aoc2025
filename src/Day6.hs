@@ -45,11 +45,7 @@ operatorColumns grid maxRow maxCol = [0..maxCol] >>= \col -> case Map.lookup (co
                                         Just c -> if c `elem` ['*','+'] then [col] else []
                                         Nothing -> []
 
-limits :: Map (Int,Int) Char -> (Int,Int)
-limits grid = let
-                    cols  = map fst (Map.keys grid)
-                    rows = map snd (Map.keys grid)
-               in (maximum cols, maximum rows)
+
 
 
 operatorBlocks :: Map (Int, Int) Char -> Int -> Int -> [(Int, Int)]
@@ -61,7 +57,7 @@ operatorBlocks grid maxRow maxCol = let
 
 cephlopodNumbers :: Map (Int, Int) Char -> [([Int],T.Text)]
 cephlopodNumbers grid = let
-                            (maxCol, maxRow) = limits grid
+                            (maxCol, maxRow) =  L.gridLimits grid
                             opBlocks = operatorBlocks grid maxRow maxCol
                         in map (\(startCol, endCol) -> 
                                     let

@@ -15,6 +15,7 @@ module Lib
     , charInText
     , parseRangeBlock
     , parseIntegerBlock
+    , gridLimits
     ) where
 
 import qualified Data.Text.Encoding as E
@@ -108,3 +109,9 @@ parseIntegerBlock (x:xs) = if x == T.pack "" then ([], xs)
                                 (ints, rest) = parseIntegerBlock xs
                                 newInt = read (T.unpack x) :: Integer
                              in (newInt:ints, rest)
+
+gridLimits :: Map (Int,Int) a -> (Int,Int)
+gridLimits grid = let
+                    cols  = map fst (Map.keys grid)
+                    rows = map snd (Map.keys grid)
+               in (maximum cols, maximum rows)
