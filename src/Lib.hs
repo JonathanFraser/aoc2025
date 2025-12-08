@@ -16,6 +16,20 @@ module Lib
     , parseRangeBlock
     , parseIntegerBlock
     , gridLimits
+    , AdjacencyGraph(..)
+    , getNodeMembership
+    , getNodeNeighbors
+    , getOrInsertNode
+    , connectNodes
+    , emptyGraph
+    , fromVertices
+    , numSubGraphs
+    , IVec3(..)
+    , norm
+    , fromXYZ
+    , x
+    , y
+    , z
     ) where
 
 import qualified Data.Text.Encoding as E
@@ -115,3 +129,71 @@ gridLimits grid = let
                     cols  = map fst (Map.keys grid)
                     rows = map snd (Map.keys grid)
                in (maximum cols, maximum rows)
+
+
+data AdjacencyGraph a = AdjacencyGraph {
+    graphMembership :: Map a Integer, 
+    adjacencyMap :: Map Integer (Set a)
+} deriving (Show) 
+
+fromVertices :: (Ord a) => [a] -> AdjacencyGraph a
+fromVertices vertices = foldl (\graph v -> fst (getOrInsertNode v graph)) emptyGraph vertices
+
+numSubGraphs :: AdjacencyGraph a -> Int
+numSubGraphs graph = Map.size (adjacencyMap graph)
+
+emptyGraph :: AdjacencyGraph a
+emptyGraph = AdjacencyGraph Map.empty Map.empty
+
+getNodeMembership :: (Ord a) => a -> AdjacencyGraph a -> Maybe Integer
+getNodeMembership node graph = Map.lookup node (graphMembership graph)
+
+getNodeNeighbors :: Integer -> AdjacencyGraph a -> Set a
+getNodeNeighbors graphIdent graph = Map.findWithDefault Set.empty graphIdent (adjacencyMap graph)
+
+getOrInsertNode :: (Ord a) => a -> AdjacencyGraph a -> (AdjacencyGraph a, Integer)
+getOrInsertNode node graph = case Map.lookup node (graphMembership graph) of
+    Just membership -> (graph, membership)
+    Nothing -> let
+                   newMembership = fromIntegral (Map.size (graphMembership graph))
+                   newGraphMembership = Map.insert node newMembership (graphMembership graph)
+                   newAdjacencyMap = Map.insert newMembership (Set.singleton node) (adjacencyMap graph)
+                   newGraph = AdjacencyGraph newGraphMembership newAdjacencyMap
+               in (newGraph, newMembership)
+
+connectNodes :: (Ord a) => a -> a -> AdjacencyGraph a -> AdjacencyGraph a
+connectNodes node1 node2 graph = let
+                                    (graphWithNode1, membership1) = getOrInsertNode node1 graph
+                                    (graphWithNode2, membership2) = getOrInsertNode node2 graphWithNode1
+                                    neighbors1 = Map.findWithDefault Set.empty membership1 (adjacencyMap graphWithNode2)
+                                    neighbors2 = Map.findWithDefault Set.empty membership2 (adjacencyMap graphWithNode2)
+                                    mergedNeighbors = Set.union neighbors1 neighbors2
+                                    newAdjacencyMap = Map.insert membership1 mergedNeighbors $
+                                                      Map.delete membership2 (adjacencyMap graphWithNode2)
+                                    newMembershipGraph = foldl (\m n -> Map.insert n membership1 m) (graphMembership graphWithNode2) (Set.toList mergedNeighbors)
+                                  in AdjacencyGraph newMembershipGraph newAdjacencyMap
+
+data IVec3 = IVec3 Integer Integer Integer deriving (Show, Eq, Ord)
+
+instance Num IVec3 where
+    (IVec3 x1 y1 z1) + (IVec3 x2 y2 z2) = IVec3 (x1 + x2) (y1 + y2) (z1 + z2)
+    (IVec3 x1 y1 z1) - (IVec3 x2 y2 z2) = IVec3 (x1 - x2) (y1 - y2) (z1 - z2)
+    (IVec3 x1 y1 z1) * (IVec3 x2 y2 z2) = IVec3 (x1 * x2) (y1 * y2) (z1 * z2)
+    abs (IVec3 x y z) = IVec3 (abs x) (abs y) (abs z)
+    signum (IVec3 x y z) = IVec3 (signum x) (signum y) (signum z)
+    fromInteger n = IVec3 n n n
+
+norm :: IVec3 -> Double
+norm (IVec3 x y z) = sqrt (fromIntegral (x*x + y*y + z*z))
+
+fromXYZ :: (Integral a) => (a,a,a) -> IVec3
+fromXYZ (x,y,z) = IVec3 (fromIntegral x) (fromIntegral y) (fromIntegral z)
+
+x :: IVec3 -> Integer
+x (IVec3 a _ _) = a
+
+y :: IVec3 -> Integer
+y (IVec3 _ b _) = b
+
+z :: IVec3 -> Integer
+z (IVec3 _ _ c) = c

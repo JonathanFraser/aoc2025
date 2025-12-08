@@ -58,9 +58,9 @@ main = hspec $ do
 
     describe "Day8" $ do
         it "part1" $ do
-            Day8.part1 `shouldBe` (0 :: Int)
+            Day8.part1 `shouldBe` (129564 :: Int)
         it "part2" $
-            Day8.part2 `shouldBe` (0 :: Int)
+            Day8.part2 `shouldBe` (42047840 :: Int)
 
     describe "Day9" $ do
         it "part1" $ do
@@ -79,7 +79,7 @@ main = hspec $ do
             Day11.part1 `shouldBe` (0 :: Int)
         it "part2" $
             Day11.part2 `shouldBe` (0 :: Int)
-            
+
     describe "Day12" $ do
         it "part1" $ do
             Day12.part1 `shouldBe` (0 :: Int)
