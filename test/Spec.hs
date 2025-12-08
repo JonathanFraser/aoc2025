@@ -6,6 +6,11 @@ import qualified Day4 as Day4
 import qualified Day5 as Day5
 import qualified Day6 as Day6
 import qualified Day7 as Day7
+import qualified Day8 as Day8
+import qualified Day9 as Day9
+import qualified Day10 as Day10
+import qualified Day11 as Day11
+import qualified Day12 as Day12
 
 main :: IO ()
 main = hspec $ do
@@ -44,8 +49,39 @@ main = hspec $ do
             Day6.part1 `shouldBe` (5977759036837 :: Int)
         it "part2" $
             Day6.part2 `shouldBe` (9630000828442 :: Int)
+
     describe "Day7" $ do
         it "part1" $ do
             Day7.part1 `shouldBe` (1573 :: Int)
         it "part2" $
             Day7.part2 `shouldBe` (15093663987272 :: Integer)
+
+    describe "Day8" $ do
+        it "part1" $ do
+            Day8.part1 `shouldBe` (0 :: Int)
+        it "part2" $
+            Day8.part2 `shouldBe` (0 :: Int)
+
+    describe "Day9" $ do
+        it "part1" $ do
+            Day9.part1 `shouldBe` (0 :: Int)
+        it "part2" $
+            Day9.part2 `shouldBe` (0 :: Int)
+
+    describe "Day10" $ do
+        it "part1" $ do
+            Day10.part1 `shouldBe` (0 :: Int)
+        it "part2" $
+            Day10.part2 `shouldBe` (0 :: Int)
+
+    describe "Day11" $ do
+        it "part1" $ do
+            Day11.part1 `shouldBe` (0 :: Int)
+        it "part2" $
+            Day11.part2 `shouldBe` (0 :: Int)
+            
+    describe "Day12" $ do
+        it "part1" $ do
+            Day12.part1 `shouldBe` (0 :: Int)
+        it "part2" $
+            Day12.part2 `shouldBe` (0 :: Int)

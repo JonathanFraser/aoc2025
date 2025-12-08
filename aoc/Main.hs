@@ -5,6 +5,11 @@ import qualified Day4 as D4
 import qualified Day5 as D5
 import qualified Day6 as D6
 import qualified Day7 as D7
+import qualified Day8 as D8
+import qualified Day9 as D9
+import qualified Day10 as D10
+import qualified Day11 as D11
+import qualified Day12 as D12
 
 
 import Options.Applicative
@@ -54,8 +59,39 @@ day7Input = flag' Day7
     <> short '7'
     <> help "Run Day7" )
 
+day8Input :: Parser Day
+day8Input = flag' Day8
+    (  long "day8"
+    <> short '8'
+    <> help "Run Day8" )
+
+day9Input :: Parser Day
+day9Input = flag' Day9
+    (  long "day9"
+    <> short '9'
+    <> help "Run Day9" ) 
+
+day10Input :: Parser Day
+day10Input = flag' Day10
+    (  long "day10"
+    <> short 'a'
+    <> help "Run Day10" )
+
+day11Input :: Parser Day
+day11Input = flag' Day11
+    (  long "day11"
+    <> short 'b'     
+    <> help "Run Day11" )
+
+day12Input :: Parser Day
+day12Input = flag' Day12
+    (  long "day12"
+    <> short 'c'
+    <> help "Run Day12" )
+
+
 allInput :: Parser Day
-allInput = day1Input <|> day2Input <|> day3Input <|> day4Input <|> day5Input <|> day6Input <|> day7Input
+allInput = day1Input <|> day2Input <|> day3Input <|> day4Input <|> day5Input <|> day6Input <|> day7Input <|> day8Input <|> day9Input <|> day10Input <|> day11Input <|> day12Input
 
 main :: IO ()
 main = do
@@ -71,4 +107,9 @@ main = do
         Day5 -> D5.run_parts
         Day6 -> D6.run_parts
         Day7 -> D7.run_parts
+        Day8 -> D8.run_parts
+        Day9 -> D9.run_parts
+        Day10 -> D10.run_parts
+        Day11 -> D11.run_parts
+        Day12 -> D12.run_parts
 
