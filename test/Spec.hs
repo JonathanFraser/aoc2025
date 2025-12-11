@@ -60,19 +60,20 @@ main = hspec $ do
         it "part1" $ do
             Day8.part1 `shouldBe` (129564 :: Int)
         it "part2" $
-            Day8.part2 `shouldBe` (42047840 :: Int)
+            Day8.part2 `shouldBe` (42047840 :: Integer)
 
     describe "Day9" $ do
         it "part1" $ do
-            Day9.part1 `shouldBe` (0 :: Int)
+            Day9.part1 `shouldBe` (4776100539 :: Int)
         it "part2" $
             Day9.part2 `shouldBe` (0 :: Int)
 
     describe "Day10" $ do
         it "part1" $ do
-            Day10.part1 `shouldBe` (0 :: Int)
-        it "part2" $
-            Day10.part2 `shouldBe` (0 :: Int)
+            Day10.part1 `shouldBe` (509 :: Int)
+        it "part2" $ do
+            p2 <- Day10.part2
+            p2 `shouldBe` (20083 :: Int)
 
     describe "Day11" $ do
         it "part1" $ do

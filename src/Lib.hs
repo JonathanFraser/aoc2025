@@ -30,6 +30,7 @@ module Lib
     , x
     , y
     , z
+    , shoelace
     ) where
 
 import qualified Data.Text.Encoding as E
@@ -197,3 +198,38 @@ y (IVec3 _ b _) = b
 
 z :: IVec3 -> Integer
 z (IVec3 _ _ c) = c
+
+shoelace :: Num a => [(a,a)] -> a
+shoelace vertices = let
+                        wrapped = vertices ++ [head vertices]
+                        pairs = zip vertices (tail wrapped)
+                        crossProductsSum = sum [ (x1 * y2) - (x2 * y1) | ((x1, y1), (x2, y2)) <- pairs ]
+                    in abs (crossProductsSum) 
+
+
+data Rectangle = Rectangle {
+    bottomLeft :: (Int, Int),
+    topRight :: (Int, Int)
+} deriving (Show, Eq)
+
+area :: Rectangle -> Int
+area rect = (x2 - x1 + 1) * (y2 - y1 + 1)
+  where
+    (x1, y1) = bottomLeft rect
+    (x2, y2) = topRight rect
+
+validateRectangle :: Rectangle -> Bool
+validateRectangle rect = let
+    (x1, y1) = bottomLeft rect
+    (x2, y2) = topRight rect
+  in x1 <= x2 && y1 <= y2
+
+boarderPoints :: Rectangle -> [(Int, Int)]
+boarderPoints rect = let
+    (x1, y1) = bottomLeft rect
+    (x2, y2) = topRight rect
+    bottomEdge = [(x, y1) | x <- [x1..x2]]
+    topEdge = [(x, y2) | x <- [x1..x2]]
+    leftEdge = [(x1, y) | y <- [y1..y2]]
+    rightEdge = [(x2, y) | y <- [y1..y2]]
+  in Set.toList $ Set.fromList (bottomEdge ++ topEdge ++ leftEdge ++ rightEdge)

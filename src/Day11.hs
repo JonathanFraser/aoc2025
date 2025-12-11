@@ -18,7 +18,7 @@ sourceFile =  L.decodeCharacterGrid $ T.lines $ L.decodeTextFile $(embedFile "da
 part1 :: Int
 part1 = 0
 
-part2 :: Integer
+part2 :: Int
 part2 = 0
 
 run_parts :: IO ()
