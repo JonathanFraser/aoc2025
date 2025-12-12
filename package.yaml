@@ -27,6 +27,10 @@ dependencies:
 - template-haskell
 - containers
 - simple-vec3
+- search-algorithms
+- hmatrix
+- MIP
+- scientific
 
 ghc-options:
 - -Wall
